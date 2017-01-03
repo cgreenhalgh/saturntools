@@ -1,0 +1,153 @@
+# download modules 
+
+... saturntools.DownloadSaturnModuleFiles
+
+# saturn module maintainance page to course or module ids
+
+... saturntools.Index2ModuleCodes < module_list.html > module_codes.txt
+
+... saturntools.Index2CourseCodes < course_list.html > course_codes.csv
+
+# getting module maintainance pages from saturnweb...
+
+Log into Saturnweb, enter module maintenance, and list modules for administering school Computer Science,
+Save this page as (e.g.) modulelist.html
+
+Process this with Index2ModuleCodes as above. 
+
+Typical URL: https://saturnweb.nottingham.ac.uk/Nottingham/ModuleCatalogue/asp/ViewModule.asp?crs_id=018562&year_id=000111&asp_type_id=000009
+
+Log into the site. From the browser view cookies (e.g. Chrome -> Options -> Under the Bonnet -> Content Settings... -> Cookies -> Show cookies and other site data...
+
+Note: Change the COOKIENAME & VALUE and year code in the following...
+
+for code in `cat ../module_codes.txt | awk '{print $1}'`; do module=`cat ../module_codes.txt | grep $code | awk '{print $2;}'`; echo $code $module; curl -k -b ASPSESSIONIDCQATABST=NDAAIFHBAIJADNECOIBOFKEF -k "https://saturnweb.nottingham.ac.uk/Nottingham/ModuleCatalogue/asp/ViewModule.asp?crs_id=${code}&year_id=000111&asp_type_id=000009" > ${module}.html; done
+
+# history of module delivery
+
+... saturntools.LocalSaturnModuleHistoryReader ...
+
+# module dependencies
+
+... saturntools.LocalSaturnModuleDependencies ...
+
+# module dependencies graph (using graph viz / dot renderer)
+
+... saturntools.LocalSaturnModuleDependenciesGraph ...
+
+
+# summary table of all modules
+
+java -classpath bin;src;lib\log4j-1.2.13.jar saturntools.LocalSaturnModuleSummary groups.csv *_000109.html > module_summary_no_group.csv
+
+#java -classpath bin;src;lib\log4j-1.2.13.jar saturntools.MergeNewgroup groups.csv module_summary_no_group.csv > module_summary.csv
+#java -classpath bin;src;lib\log4j-1.2.13.jar saturntools.MergeNewgroup2 module_newgroups_only.csv module_summary_no_group.csv > module_summary.csv
+
+# compare
+
+java -classpath bin;src;lib\log4j-1.2.13.jar saturntools.CsvDiff all_modules_draft_20100304.csv module_maint_details.csv modulecode moduletitle available level semester credits prerequisites corequisites prerequisitestext > module_diff.csv
+
+# compare course structures
+# G404
+java -classpath bin;src;lib\log4j-1.2.13.jar saturntools.CsvDiff all_modules_draft_20100309T153000.csv course_requirements.csv modulecode G400 G402 G403 G425 G4G7 G4H6 G507 G565 G601 GG14 GG41 GH57 GN42 GNK1 > course_requirements_diff.csv
+
+# details
+
+java -classpath bin;src;lib\log4j-1.2.13.jar saturntools.LocalSaturnModuleDetails *_000109.html > module_details.csv
+
+
+# modules for each course
+
+java -classpath bin;src;lib\log4j-1.2.13.jar saturntools.LocalSaturnCourseRequirements module_areas.csv G400.htm G601.htm GNK1.htm G4G7.htm G4H6.htm GN42.htm GG41.htm > course-modules.csv
+
+<<<<<<< usage.txt
+G400.htm G601.htm G4G7.htm G4H6.htm GNK1.htm GN42.htm GG41.htm GG14.htm
+G403.htm G900.htm G402.htm GH57.htm G565.htm G507.htm 
+G404.htm 
+=======
+G404.html G400.html G601.html G4G7.html G4H6.html GNK1.html GN42.html GG41.html GG14.html
+G404.html GG14.html G403.html G900.html G402.html GH57.html G565.html G507.html 
+>>>>>>> 1.19
+
+G403.htm ACS
+G402.htm CS/Entrepreneurship
+G507     IT
+G565 MIT
+GH57 ISD
+G900 Scientific computation
+
+java -classpath ..\..\saturntools.jar saturntools.LocalSaturnModuleTable ..\all_modules_20110228.csv ..\groups_2010.csv ..\all_modules_20110228.csv CSAi.html  G402.html  G425.html  G507.html  G601_SS.html  GG41.html DE.html    G403.html  G4G7.html  G565.html  G900.html     GH57.html G400.html  G404.html  G4H6.html  G601.html  GG14.html     GN42.html
+
+
+#all
+java -classpath bin;src;lib\log4j-1.2.13.jar saturntools.LocalSaturnCourseRequirements module_summary.csv G400.htm G601.htm G4G7.htm G4H6.htm GNK1.htm GN42.htm GG41.htm GG14.htm G403.htm G900.htm G402.htm GH57.htm G565.htm G507.htm > course-modules.csv
+
+
+java -classpath bin;src;lib\log4j-1.2.13.jar saturntools.LocalSaturnCourseRequirements module_areas.csv G403.htm G900.htm G402.htm G507.htm G565.htm GH57.htm G900.htm > course-modules-pg.csv
+
+# learning outcomes
+
+java -classpath bin;src;lib\log4j-1.2.13.jar saturntools.LocalSaturnCourseLearningOutcomes *.html > learning_outcomes.csv
+
+# student module choices with options
+
+java -classpath bin;src;lib\log4j-1.2.13.jar saturntools.LocalSaturnStudentChoices module_areas.csv student-modules-1-0506.csv student-modules-1-0607.csv student-modules-1-0708.csv student-modules-1-0809.csv G400.htm G601.htm GG14.htm GG41.htm GN42.htm GNK1.htm G4G7.htm G4H6.htm > student-choices.csv
+
+java -classpath bin;src;lib\log4j-1.2.13.jar saturntools.LocalSaturnStudentChoices module_areas.csv student-modules-1-0809.csv G403.htm G900.htm G402.htm G507.htm G565.htm GH57.htm G900.htm > student-choices-pg.csv
+
+D:\cmg\Teaching\Software\saturntools>neato -Tpng -o modules_by_group_ug.png -n modules_by_group_ug.dot
+
+D:\cmg\Teaching\Software\saturntools>java -classpath bin;lib\log4j-1.2.13.jar saturntools.LocalModuleTableDependenciesGraph module_summary.csv modules_by_group_ug.csv > modules_by_group_ug.dot
+
+
+>java -classpath bin;lib\log4j-1.2.13.jar saturntools.SortModulesByGroup module_newgroups_only.csv module_summary.csv > module_table.csv
+
+REM D:\cmg\Teaching\Software\saturntools>java -classpath bin;lib\log4j-1.2.13.jar saturntools.LocalModuleTableDependenciesGraph module_summary.csv
+module_table.csv> module_table.dot
+
+D:\cmg\Teaching\Software\saturntools>neato -Tpng -o module_table.png -n module_table.dot
+
+>java -classpath bin;lib\log4j-1.2.13.jar saturntools.LocalModuleTableDependenciesGraph module_summary.csv modules_by_group_ug_2.csv GNK1.htm > modules_by_group_ug_GNK1.dot
+
+// options...
+
+>java -classpath bin;lib\log4j-1.2.13.jar saturntools.LocalSaturnCourseOptions module_summary.csv etc/course_credits.csv etc/module_tags.csv G400.htm ... > course_options.csv
+
+>java -classpath bin;lib\log4j-1.2.13.jar saturntools.LocalSaturnCourseOptionGui module_summary.csv etc/course_credits.csv etc/module_tags.csv G400.htm ... > course_options.csv
+
+=====================================================================
+# IMS Enterprise -> enterprise-modules-YYYY-MM-DD.xml
+
+... saturntools.LocalSaturnModulesToImsEnterprise etc\semesters-2009-2010.txt *.html
+
+# IMS Enterprise with LDAP lookup for staff
+
+... saturntools.LocalSaturnModuleConvenorsToImsEnterprise etc\semesters-2009-2010.txt etc\customuserids.txt *.html
+
+# IMS Enterprise from Saturn web students module II export -> enterprise-students-YYYY-MM-DD.xml
+
+... saturntools.LocalSaturnModulesToImsEnterprise export.txt
+
+
+
+java -classpath ..\..\bin;..\..\src;..\..\lib\log4j-1.2.13.jar saturntools.ProcessSaturnExportMarks modules3_0506.txt modules3_0607.txt modules3_0708.txt modules3_0809.txt modules3_0910.txt modules3_1011.txt
+
+java -classpath ..\..\bin;..\..\src;..\..\lib\log4j-1.2.13.jar saturntools.ProcessSaturnExportStudents schoollist_20100109.txt studentsearch_furtherdetails_pg_20100109.txt studentsearch_furtherdetails_ug_20100109.txt modules3_0506.txt modules3_0607.txt modules3_0708.txt modules3_0809.txt modules3_0910.txt modules3_1011.txt
+
+=========================================================================
+# cross-campus comparison
+
+java -classpath ..\bin;..\lib\log4j-1.2.13.jar;..\src saturntools.CsvDiff module_summary_UK.csv module_summary_UNMC.csv modulecode moduletitle level semester credits available newgroup prerequisites prerequisitestext corequisites corequisitestext targetstudents
+
+java -classpath ..\bin;..\lib\log4j-1.2.13.jar;..\src saturntools.CsvDiff module_summary_UK.csv module_summary_UNNC.csv moduletitle moduletitle level semester credits available newgroup prerequisites prerequisitestext corequisites corequisitestext targetstudents > modules_UK_vs_UNNC.csv
+
+==========================
+
+java -cp ../../../../saturntools.jar  saturntools.LocalSaturnModuleSummaryTable ../../modulesummary_2011_uk.csv ../../groups_2011.csv c:G404.html a:G4G1.html s:G601.html m:GN42.html x:GG14.html C:G403.html E:G402.html H:G440.html I:G507.html M:G565.html D:G592.html > all_usage_table.html
+
+$ java -cp ../../../../saturntools.jar  saturntools.LocalSaturnModuleSummaryTab
+le ../../modulesummary_2011_uk.csv ../../groups_2011.csv ../../modules3export_2
+0111130.csv  c:G404.html c:G400 a:G4G1.html a:G4G7 a:G4H6 s:G601.html s:G425 m:
+GN42.html x:GG14.html x:GG41 C:G403.html C:G403 E:G402.html H:G440.html I:G507.
+html M:G565.html D:G592.html > all_usage_table.html
+

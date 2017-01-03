@@ -1,0 +1,17 @@
+# properties file for LocalSaturnModulesToImsEnterprise with semester dates, format YYYY-MM-DD
+autumn.teach.begin: 
+autumn.teach.end: 
+fullyear.teach.begin: 
+fullyear.teach.end:
+spring.teach.begin:
+spring.teach.end:
+summer.teach.being:
+summer.teach.end:
+autumn.enrol.begin: 
+autumn.enrol.end: 
+fullyear.enrol.begin: 
+fullyear.enrol.end:
+spring.enrol.begin:
+spring.enrol.end:
+summer.enrol.begin:
+summer.enrol.end:

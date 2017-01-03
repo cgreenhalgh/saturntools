@@ -1,0 +1,5 @@
+# properties file with custom user ids
+# bai li
+itzbl:Dr L Bai
+epzscn:Dr S Sharples
+cczford:Professor P Ford

@@ -1,0 +1,23 @@
+# properties file for LocalSaturnModulesToImsEnterprise with semester dates, format YYYY-MM-DD
+# here i have put summer teaching starting with summer term and ending with autumn term.
+# see http://www.nottingham.ac.uk/about/studying/dates.php
+# and http://www.nottingham.ac.uk/timetable/html/ModuleEnrolment/Home.php
+# Saturn should be up to date 16th October 2009 (autumn) and 19th Feb 2010 (spring)
+
+autumn.teach.begin: 2009-09-21
+autumn.teach.end: 2010-01-22
+fullyear.teach.begin: 2009-09-21
+fullyear.teach.end: 2010-06-18
+spring.teach.begin: 2010-01-25
+spring.teach.end: 2010-06-18
+summer.teach.begin: 2010-06-21
+summer.teach.end: 2010-09-17
+
+autumn.enrol.begin: 2009-09-21 
+autumn.enrol.end: 2009-10-15
+fullyear.enrol.begin: 2009-09-21
+fullyear.enrol.end: 2009-10-15
+spring.enrol.begin: 2010-01-25
+spring.enrol.end: 2010-02-18
+summer.enrol.begin: 2010-01-25
+summer.enrol.end: 2010-02-18

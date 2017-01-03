@@ -1,0 +1,50 @@
+SaturnTools file formats
+
+modulecsvfile
+
+'modulecode'
+'moduletitle' 
+'year' [nn/nn]
+'level'
+'semester' 
+'credits' 
+'status' 
+'available' [Y]
+'prerequisites' [code ...] 
+'corequisites' [code ...]
+'targetstudents' 
+'prerequisitestext' 
+'summary' 
+'educationaims' 
+'learningoutcomes' 
+'lastupdated' 
+'filemodified' 
+
+moduleextracsvfile
+
+'modulecode'
+'year'
+'oldcode'
+'justification'
+'reviewnotes'
+'semesternotes'
+
+
+coursecsvfile
+
+'coursecode' 
+'coursetitle' 
+'year' 
+'filemodified' 
+
+optionscsvfile
+
+'modulecode'
+$satcourse->code (coursecsvfile coursecode) [On/Cn/An ...]
+...
+
+groupcsvfile
+
+'groupcode' 
+'grouptitle' 
+'modulecodes' [code ...]

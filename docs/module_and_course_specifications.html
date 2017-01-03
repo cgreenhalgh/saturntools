@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+
+
+
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Module and Course Specifications</title></head><body>
+<h1>Working with Saturn Module and Course Specifications</h1>
+Chris Greenhalgh, 2011-03-10<br>
+<h2>Introduction</h2>
+<p>Saturntools includes a number of utilities for processing Saturn
+module and course specifications, as exposed through the online module
+handbook, online programme specifications and saturn maintenance views
+of module and programme specifications.</p>
+<h3>Downloading Module Specifications from Saturn Module Maintenance</h3>
+<p>Log into Saturnweb, from the Main Menu select Module Catalogue
+Maintenance, and search for&nbsp;modules By Administering School
+"Computer Science" for the relevant year. You can include or exclude
+dormant modules.&nbsp;Save the module list frame as (e.g.)
+modulelist.html. In Internet Explorer you can do this by right-clicking
+the list area, selecting View Source, and then saving that file.</p>
+<p>From a current session in saturntools find the Cookie name and value that your browser is using. For example in Google Chrome,
+Chrome -&gt; Options -&gt; Under the Bonnet -&gt;
+Content Settings... -&gt; Cookies -&gt; Show cookies and other site
+data... and search for 'saturnweb', find the current (most recently
+created) cookie, and copy the Name and Content (value). (It might look
+something like name "ASPSESSIONIDCQSQDDQQ" and content (value)
+"KHLPLDBAEANEPGJHDONOPAJP".)</p>
+<p>Now run the saturntools.DownloadSaturnModuleMaintFiles application,&nbsp;</p>
+<pre>java -cp saturntools.jar saturntools.DownloadSaturnModuleMaintFiles &lt;modulelist.html&gt; &lt;cookie&gt; &lt;yearcode&gt;</pre>
+<p>Where&nbsp;</p>
+<ul>
+  <li>&lt;modulelist.html&gt; is the previously downloaded search/index file;</li>
+  <li>&lt;cookie&gt; is the cookie value in the form
+COOKIENAME=COOKIEVALUE for a currently authenticated saturnweb session
+(see above); and</li>
+  <li>&lt;yearcode&gt; is for example 000111 for 2011/12 (six digits, year-1900)");<br>
+  </li>
+</ul>
+<p>This will download the listed module files for the specified year
+(if available) to file(s) called
+&lt;modulecode&gt;_&lt;yearcode&gt;.html. </p>
+<h3>Downloading Module Specifications from the public Module Handbook</h3>
+<p>Use the  saturntools.DownloadSaturnModuleFiles application,</p>
+<pre>java -cp saturntools.jar saturntools.DownloadSaturnModuleFiles &lt;yearcode&gt;</pre>
+<p>Where&nbsp;</p>
+<ul>
+  <li>&lt;yearcode&gt; is for example 000111 for 2011/12 (six digits, year-1900)");</li>
+</ul>
+<p>Note that application is hard-coded to download modules offered by Computer Science.</p>
+<h3>Generating&nbsp;a Summary of All Modules</h3>
+<p>Perhaps&nbsp;the most useful tool working on module specifications
+generates a single CSV file with the "main" information about each
+module; this can then be viewed easily in Excel (or processed by other
+applications):</p>
+<pre>java -cp saturntools.jar saturntools.LocalSaturnModuleSummary &lt;groups.csv&gt; &lt;modulefile.html&gt; ... &gt; &lt;modulesummary.html&gt;<br></pre>
+<p>The <span style="font-family: monospace;">&lt;groups.csv&gt;</span> file must have columns: <span style="font-family: monospace;">groupcode</span> (group alphanumeric code), <span style="font-family: monospace;">grouptitle</span> and <span style="font-family: monospace;">modulecodes</span> (whitespace-separated list of module codes in this group).</p>
+<p>For example, for a particular year's modules, creating module_summary.html</p>
+
+<pre>java -cp saturntools.jar saturntools.LocalSaturnModuleSummary groups_2010.csv *_000111.html ... &gt; module_summary.csv<br></pre>
+<h3>Checking Changes to Module Information&nbsp;</h3>
+<pre>java -cp saturntools.jar saturntools.CsvDiff &lt;module_summary1.html&gt; &lt;module_summary2.html&gt; modulecode &lt;columnname&gt; ...<br></pre>
+<p>Example column names: semester, credits, available, status, level, moduletitle</p>
+<h3>Downloading Programme Specifications</h3>
+<p>Programme specifications should be downloaded by hand from Saturnweb
+or the online programme specifications. They should usually be saved in
+a file ("HTML only") with the course code as the name, e.g. "G400.html".</p>
+<p>Current courses on saturn: G4G7.html G4G1.html G4H6.html G400.html G402.html
+G403.html G404.html G425.html G507.html G565.html G601.html G900.html
+GG14.html GG41.html G404.html GN42.html</p>
+<p>In a more "semantic" order (UG, then PG, mostly): G400.html
+G601.html G425.html G4G7.html GN42.html&nbsp;GG41.html GG14.html
+G404.html G4G1.html G403.html G900.html G402.html
+G507.html&nbsp;G565.html G440.html G592.html<br>
+ </p>
+<h3>Generating a Summary of All Course Options</h3>
+<p>By combining a module summary with the downloaded programme
+specifications you can generate a summary spreadsheet of the module
+option(s) for a set of programmes:</p>
+<pre>java -cp saturntools.jar saturntools.LocalSaturnCourseRequirements &lt;module_summary.csv&gt; &lt;coursespec.html&gt; ... &gt; &lt;course_requirements.csv&gt;<br></pre>
+<p>E.g.</p>
+<pre>java -cp saturntools.jar saturntools.LocalSaturnCourseRequirements module_summary.csv G400.html G601.html G425.html G4G7.html G4H6.html&nbsp;GN42.html&nbsp;GG41.html GG14.html G404.html G403.html G900.html G402.html GH57.html G507.html&nbsp;G565.html GH57.html &gt; course_requirements.csv<br></pre>
+<h3>Checking Changes to Course Options&nbsp;</h3>
+<pre>java -cp saturntools.jar saturntools.CsvDiff &lt;course_requirements1.html&gt; &lt;course_requirements2.html&gt; modulecode &lt;columnname&gt; ...<br></pre>
+<p>Where column names are course codes, e.g: &nbsp;G400 G601 G425 G4G7
+G4H6&nbsp;GN42&nbsp;GG41 GG14 G404 G403 G900 G402 G507&nbsp;G565 GH57</p>
+<p></p>
+<h3>Generating Tables of Module Options</h3>
+For each specific course:<br>
+<pre>java -cp saturntools.jar saturntools.LocalSaturnModuleTable &lt;module-summary.csv&gt; &lt;groups.csv&gt; &lt;extramoduleinfo.csv&gt; &lt;coursespec.html&gt; ...<br></pre>
+<p>&lt;extramoduleinfo.csv&gt; can just be the
+&lt;module-summary.csv&gt; again. The main thing it will look for is
+the "grouprole", which should be one of unknown, core, branch, leaf,
+convergence, project, other, foundation. But this isn't really needed
+in the course-specific tables...<br>
+</p>
+<p><br>
+</p>
+
+<p></p>
+<p></p>
+</body></html>

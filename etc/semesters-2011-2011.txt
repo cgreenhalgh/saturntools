@@ -1,0 +1,19 @@
+# properties file for LocalSaturnModulesToImsEnterprise with semester dates, format YYYY-MM-DD
+# http://www.nottingham.ac.uk/academicservices/timetabling/furtherinformation/teachingweeks.aspx
+
+autumn.teach.begin: 2011-09-26
+autumn.teach.end: 2012-01-29
+fullyear.teach.begin: 2011-09-26
+fullyear.teach.end: 2012-06-22
+spring.teach.begin: 2012-01-30
+spring.teach.end: 2012-06-22
+summer.teach.begin: 2012-06-25
+summer.teach.end: 2012-09-23
+autumn.enrol.begin: 2011-09-26
+autumn.enrol.end: 2011-10-17
+fullyear.enrol.begin: 2011-09-26
+fullyear.enrol.end: 2012-02-20
+spring.enrol.begin: 2012-01-30
+spring.enrol.end: 2012-02-20
+summer.enrol.begin: 2012-06-25
+summer.enrol.end: 2012-06-25

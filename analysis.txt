@@ -1,0 +1,71 @@
+Some notes on analysing/visualisation marks within and between modules.
+
+Generate all marks for each student using ProcessSaturnExportMarks, output as 
+out_student_allmarks_1011.csv or equivalent.
+
+Headings are:
+student,course,yearOnCourse,nmarks-ex0,mean,min,Q.25,Q.5,Q.75,max,G50ALG,G50ALG_resit,G51APS,G51APS_resit,...
+
+In R...
+
+allmarks<-read.table("out_student_allmarks_1011.csv", header=TRUE, sep=",")
+
+summary(allmarks)
+
+
+boxplot(allmarks$min,allmarks$Q.25,allmarks$Q.5,allmarks$Q.75,allmarks$max,allmarks$mean)
+
+boxplot(allmarks$min,allmarks$Q.25,allmarks$Q.5,allmarks$G54ACC,allmarks$Q.75,allmarks$max)
+
+qqplot(allmarks$G54ACC,allmarks$Q.5)
+
+boxplot(allmarks$G51PRG,allmarks$G51MCS,allmarks$G51APS,allmarks$G51CSA,allmarks$G51REQ)
+
+y1s1<-data.frame(PRG=allmarks$G51PRG,MCS=allmarks$G51MCS,APS=allmarks$G51APS,CSA=allmarks$G51CSA,REQ=allmarks$G51REQ,allmarks$Q.5)
+plot(y1s1,xlim=c(0,100),ylim=c(0,100))
+boxplot(list(PRG=allmarks$G51PRG,MCS=allmarks$G51MCS,APS=allmarks$G51APS,CSA=allmarks$G51CSA,REQ=allmarks$G51REQ,Median=allmarks$Q.5[!is.na(allmarks$G51PRG)]))
+
+y2s1<-data.frame(median=allmarks$Q.5,ADS=allmarks$G52ADS,GUI=allmarks$G52GUI,IFR=allmarks$G52IFR,PAS=allmarks$G52PAS,SEM=allmarks$G52SEM)
+plot(y2s1,xlim=c(0,100),ylim=c(0,100))
+boxplot(list(Median=allmarks$Q.5[!is.na(allmarks$G52ADS)],ADS=allmarks$G52ADS,GUI=allmarks$G52GUI,IFR=allmarks$G52IFR,PAS=allmarks$G52PAS,SEM=allmarks$G52SEM))
+
+
+y3s1<-data.frame(median=allmarks$Q.5,BIO=allmarks$G53BIO,ELC=allmarks$G53ELC,KRR=allmarks$G53KRR,MLE=allmarks$G53MLE,ORO=allmarks$G53ORO,SRP=allmarks$G53SRP,VIP=allmarks$G53VIS)
+plot(y3s1,xlim=c(0,100),ylim=c(0,100))
+boxplot(list(median=allmarks$Q.5[allmarks$yearOnCourse==3],BIO=allmarks$G53BIO,ELC=allmarks$G53ELC,KRR=allmarks$G53KRR,MLE=allmarks$G53MLE,ORO=allmarks$G53ORO,SRP=allmarks$G53SRP,VIP=allmarks$G53VIS))
+
+#cf median
+boxplot(list(BIO=(allmarks$G53BIO-allmarks$Q.5)[allmarks$nmarks.ex0>2],ELC=(allmarks$G53ELC-allmarks$Q.5)[allmarks$nmarks.ex0>2],KRR=(allmarks$G53KRR-allmarks$Q.5)[allmarks$nmarks.ex0>2],MLE=(allmarks$G53MLE-allmarks$Q.5)[allmarks$nmarks.ex0>2],ORO=(allmarks$G53ORO-allmarks$Q.5)[allmarks$nmarks.ex0>2],SRP=(allmarks$G53SRP-allmarks$Q.5)[allmarks$nmarks.ex0>2],VIP=(allmarks$G53VIS-allmarks$Q.5)[allmarks$nmarks.ex0>2]))
+#cf mean
+boxplot(list(BIO=(allmarks$G53BIO-allmarks$mean)[allmarks$nmarks.ex0>2],ELC=(allmarks$G53ELC-allmarks$mean)[allmarks$nmarks.ex0>2],KRR=(allmarks$G53KRR-allmarks$mean)[allmarks$nmarks.ex0>2],MLE=(allmarks$G53MLE-allmarks$mean)[allmarks$nmarks.ex0>2],ORO=(allmarks$G53ORO-allmarks$mean)[allmarks$nmarks.ex0>2],SRP=(allmarks$G53SRP-allmarks$mean)[allmarks$nmarks.ex0>2],VIP=(allmarks$G53VIS-allmarks$mean)[allmarks$nmarks.ex0>2]))
+
+
+y4s1<-data.frame(Med.=allmarks$Q.5,ACC=allmarks$G54ACC,ALG=allmarks$G54ALG,ARC=allmarks$G54ARC,FOP=allmarks$G54FOP,FPP=allmarks$G54FPP,ORM=allmarks$G54ORM,PRG=allmarks$G54PRG,SIM=allmarks$G54SIM,ADS=allmarks$G64ADS,ICP=allmarks$G64ICP)
+plot(y4s1,xlim=c(0,100),ylim=c(0,100))
+boxplot(y4s1)
+
+boxplot(list(ACC=(allmarks$G54ACC-allmarks$Q.5)[allmarks$nmarks.ex0>2],ALG=(allmarks$G54ALG-allmarks$Q.5)[allmarks$nmarks.ex0>2],ARC=(allmarks$G54ARC-allmarks$Q.5)[allmarks$nmarks.ex0>2],FOP=(allmarks$G54FOP-allmarks$Q.5)[allmarks$nmarks.ex0>2],FPP=(allmarks$G54FPP-allmarks$Q.5)[allmarks$nmarks.ex0>2],ORM=(allmarks$G54ORM-allmarks$Q.5)[allmarks$nmarks.ex0>2],PRG=(allmarks$G54PRG-allmarks$Q.5)[allmarks$nmarks.ex0>2],SIM=(allmarks$G54SIM-allmarks$Q.5)[allmarks$nmarks.ex0>2],ADS=(allmarks$G64ADS-allmarks$Q.5)[allmarks$nmarks.ex0>2],ICP=(allmarks$G64ICP-allmarks$Q.5)[allmarks$nmarks.ex0>2]))
+
+mscs1<-data.frame(allmarks$Q.5,allmarks$G53ELC,allmarks$G54ACC,allmarks$G54ALG,allmarks$G54ARC,allmarks$G54FOP,allmarks$G54ORM,allmarks$G54PRG,allmarks$G54SIM,allmarks$G64ADS,allmarks$G64ICP)
+
+
+g54accrange<-data.frame(allmarks$min,allmarks$Q.25,allmarks$Q.5,allmarks$Q.75,allmarks$max,allmarks$G54ACC)
+g54acccmp<-data.frame(allmarks$g54acc,allmarks$g53elc,allmarks$54prg,all
+
+
+qqplot(allmarks$G53SRP,allmarks$Q.5,xlim=c(0,100),ylim=c(0,100))
+
+
+# courses...
+boxplot(allmarks$Q.5 ~ allmarks$course)
+
+coursetype<-function(c) { if (c=="Computer Science" | c=="Software Systems" | c=="Computer Science and Management Studies") "UG" else if (c=="Advanced Computing Science" | c=="Information Technology" | c=="Management of Information Technology" | c=="Computer Science with Entrepreneurship" | c=="Scientific Computation") "PG" else "Unknown" }
+
+ct<-factor(mapply(coursetype,allmarks$course))
+
+boxplot(list(UG=allmarks$Q.5[ct=="UG"],PG=allmarks$Q.5[ct=="PG"],Other=allmarks$Q.5[ct=="Unknown"]))
+
+boxplot(list(UG=allmarks$G54ACC[ct!="PG"],UGMed=allmarks$Q.5[ct!="PG" & !is.na(allmarks$G54ACC)],PG=allmarks$G54ACC[ct=="PG"],PGMed=allmarks$Q.5[ct=="PG" & !is.na(allmarks$G54ACC)]))
+boxplot(list(UG=allmarks$G54ARC[ct!="PG"],UGMed=allmarks$Q.5[ct!="PG" & !is.na(allmarks$G54ARC)],PG=allmarks$G54ARC[ct=="PG"],PGMed=allmarks$Q.5[ct=="PG" & !is.na(allmarks$G54ARC)]))
+boxplot(list(UG=allmarks$G54FOP[ct!="PG"],UGMed=allmarks$Q.5[ct!="PG" & !is.na(allmarks$G54FOP)],PG=allmarks$G54FOP[ct=="PG"],PGMed=allmarks$Q.5[ct=="PG" & !is.na(allmarks$G54FOP)]))
+
