@@ -2,8 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.13.jar"/>
-	<classpathentry kind="lib" path="lib/poi-3.7-20101029.jar"/>
-	<classpathentry kind="lib" path="lib/poi-ooxml-3.7-20101029.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/poi-3.16-beta1.jar"/>
+	<classpathentry kind="lib" path="lib/poi-ooxml-3.16-beta1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

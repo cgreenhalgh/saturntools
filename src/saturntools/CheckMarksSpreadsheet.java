@@ -111,6 +111,7 @@ public class CheckMarksSpreadsheet {
 			}
 			catch (Exception e) {
 				System.err.println("Error: Unable to read "+f+": "+e);
+				e.printStackTrace(System.err);
 				return null;
 			}
 			File reportfile = new File(outputDir, f.getName()+REPORT_FILE_SUFFIX);
